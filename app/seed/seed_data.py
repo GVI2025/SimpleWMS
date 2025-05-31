@@ -1,15 +1,17 @@
 
+from datetime import datetime, date
+
+from sqlalchemy.exc import IntegrityError
+
 from app.database.database import SessionLocal
-from app.models.article import Article, CategorieArticle
 from app.models.agent import Agent
-from app.models.commande import Commande, LigneCommande, EtatCommande
-from app.models.emplacement import Emplacement, TypeEmplacement
+from app.models.article import Article
+from app.models.commande import Commande, LigneCommande
+from app.models.emplacement import Emplacement
 from app.models.implantation import Implantation
-from app.models.mission import Mission, TypeMission, EtatMission
+from app.models.mission import Mission
 from app.models.reception import Reception
 
-from datetime import datetime, date
-from sqlalchemy.exc import IntegrityError
 
 def seed():
     db = SessionLocal()
