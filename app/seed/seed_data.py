@@ -975,10 +975,56 @@ def add_new_entries():
     finally:
         db.close()
 
+
+def add_new_reception():
+    db = SessionLocal()
+    try:
+        # Get a random article and emplacement for the reception
+        article = db.query(Article).filter(Article.id == '10d55c46-9840-43f0-8dc5-23f8453b16d6').first()
+        emplacement = db.query(Emplacement).filter(Emplacement.type == 'RECEPTION').first()
+
+        if not article or not emplacement:
+            print("Article or suitable emplacement not found")
+            return None
+
+        # Create and add a new Reception
+        new_reception = Reception(
+            id=str(uuid.uuid4()),
+            article_id=article.id,
+            quantite=50,
+            fournisseur='Fournisseur XYZ',
+            date_reception=datetime.now(),
+            emplacement_id=emplacement.id
+        )
+
+        # Add to database
+        db.add(new_reception)
+        db.commit()
+
+        # Print confirmation with ID
+        print(f"Réception ajoutée avec succès: ID={new_reception.id}")
+        print(f"Article: {article.designation} (SKU: {article.sku})")
+        print(f"Emplacement: {emplacement.code}")
+        print(f"Quantité: {new_reception.quantite}")
+        print(f"Date: {new_reception.date_reception}")
+
+        return new_reception.id
+
+    except Exception as e:
+        db.rollback()
+        print(f"Erreur lors de l'ajout de la réception: {e}")
+    finally:
+        db.close()
+
+
 if __name__ == "__main__":
 <<<<<<< HEAD
     init_seed_data()
 =======
     seed()
     add_new_entries()
+<<<<<<< HEAD
 >>>>>>> 710f3fd (chore: adding local test data)
+=======
+    add_new_reception()
+>>>>>>> 0b66489 (chore: adding new Reception local test data)
