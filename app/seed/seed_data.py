@@ -13,7 +13,7 @@ from app.models.mission import Mission
 from app.models.reception import Reception
 
 
-def seed():
+def init_seed_data():
     db = SessionLocal()
     try:
         # Nettoyage de la base (dans l'ordre inverse des dépendances)
@@ -935,4 +935,4 @@ def seed():
         db.close()
 
 if __name__ == "__main__":
-    seed()
+    init_seed_data()
