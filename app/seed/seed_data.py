@@ -2,6 +2,7 @@
 from datetime import datetime, date
 
 from sqlalchemy.exc import IntegrityError
+import uuid
 
 from app.database.database import SessionLocal
 from app.models.agent import Agent
@@ -934,5 +935,46 @@ def init_seed_data():
     finally:
         db.close()
 
+
+def add_new_entries():
+    db = SessionLocal()
+    try:
+        # Create and add a new Article
+        new_article = Article(
+            id=str(uuid.uuid4()),
+            sku='ART1020',
+            designation='Nouveau Produit Test',
+            categorie='PRODUIT',
+            poids_kg=4.75,
+            volume_m3=0.325,
+            date_peremption=date(2025, 6, 15)
+        )
+
+        # Create and add a new Agent
+        new_agent = Agent(
+            id=str(uuid.uuid4()),
+            nom='Agent Test',
+            email='agent.test@example.com',
+            actif=True
+        )
+
+        # Add to database
+        db.add(new_article)
+        db.add(new_agent)
+        db.commit()
+
+        # Print confirmation with IDs
+        print(f"Article ajouté avec succès: ID={new_article.id}, SKU={new_article.sku}")
+        print(f"Agent ajouté avec succès: ID={new_agent.id}, Nom={new_agent.nom}")
+
+        return new_article.id, new_agent.id
+
+    except Exception as e:
+        db.rollback()
+        print(f"Erreur lors de l'ajout: {e}")
+    finally:
+        db.close()
+
 if __name__ == "__main__":
-    init_seed_data()
+    seed()
+    add_new_entries()
