@@ -4,16 +4,6 @@ This document provides detailed solutions and answers for each of the exercises 
 
 ---
 
-## 🛠️ Setup
-
-```bash
-git fetch origin
-git checkout -b [TRIGRAM]/git origin/protected/main
-git push -u origin [TRIGRAM]/git
-```
-
----
-
 ## 🔍 Exercise 1: git fetch
 
 ```bash
