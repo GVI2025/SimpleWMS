@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "simplewms"
-version = "0.1.0"
+version = "1.0.0"
 description = "A simple WMS WebAPI REST software"
 authors = ["Your Name <your.email@example.com>"]
 readme = "README.md"
