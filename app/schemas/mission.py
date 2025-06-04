@@ -27,14 +27,37 @@ class MissionBase(BaseModel):
     date_creation: datetime
     date_execution: Optional[datetime] = None
 
-class MissionCreate(MissionBase):
-    pass
+class MissionCreate(BaseModel):
+    type: TypeMission
+    article_id: str
+    source_id: Optional[str]
+    destination_id: Optional[str]
+    quantite: int
+    urgent: Optional[bool] = False
 
-class MissionUpdate(MissionBase):
-    pass
 
-class MissionRead(MissionBase):
+class MissionUpdate(BaseModel):
+    type: Optional[TypeMission]
+    article_id: Optional[str]
+    source_id: Optional[str]
+    destination_id: Optional[str]
+    quantite: Optional[int]
+    etat: Optional[EtatMission]
+    urgent: Optional[bool]
+
+
+class MissionRead(BaseModel):
     id: str
+    type: TypeMission
+    etat: EtatMission
+    article_id: str
+    source_id: Optional[str]
+    destination_id: Optional[str]
+    quantite: int
+    agent_id: Optional[str]
+    date_creation: datetime
+    date_execution: Optional[datetime]
+    urgent: bool
 
     class Config:
         orm_mode = True

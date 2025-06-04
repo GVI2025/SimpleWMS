@@ -726,6 +726,7 @@ def seed():
                 agent_id='a3c9c21f-23a7-43a0-bbab-65b3c23ae52b',
                 date_creation=datetime(2024, 4, 7, 0, 0),
                 date_execution=None,
+
             ),
             Mission(
                 id='0a7d4367-0ad7-469f-97c6-8ce47a13a70f',
