@@ -8,8 +8,11 @@ def get_agent(db: Session, agent_id: str):
 def get_agent_by_email(db: Session, email: str):
     return db.query(AgentModel).filter(AgentModel.email == email).first()
 
-def list_agents(db: Session, skip: int = 0, limit: int = 100):
-    return db.query(AgentModel).offset(skip).limit(limit).all()
+def list_agents(db: Session, skip: int = 0, limit: int = 100, actif: bool = None):
+    query = db.query(AgentModel)
+    if actif is not None:
+        query = query.filter(AgentModel.actif == actif)
+    return query.offset(skip).limit(limit).all()
 
 def create_agent(db: Session, agent: AgentCreate):
     db_agent = AgentModel(**agent.dict())
