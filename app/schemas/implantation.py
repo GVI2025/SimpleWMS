@@ -1,3 +1,4 @@
+from typing import Optional
 from pydantic import BaseModel
 
 class ImplantationBase(BaseModel):
@@ -5,6 +6,8 @@ class ImplantationBase(BaseModel):
     emplacement_id: str
     quantite: int
     seuil_minimum: int
+    commentaires: Optional[str] = None  # ✅ ici
+
 
 class ImplantationCreate(ImplantationBase):
     pass

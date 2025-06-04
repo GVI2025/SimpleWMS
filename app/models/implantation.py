@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, ForeignKey, String
+from sqlalchemy import Column, Integer, ForeignKey, String, Text
 from sqlalchemy.orm import relationship
 from uuid import uuid4
 
@@ -12,6 +12,7 @@ class Implantation(Base):
     emplacement_id = Column(String, ForeignKey("emplacements.id"), nullable=False)
     quantite = Column(Integer, nullable=False)
     seuil_minimum = Column(Integer, nullable=False)
+    commentaires = Column(Text, nullable=True)  # ✅ Ajout ici
 
     article = relationship("Article")
     emplacement = relationship("Emplacement")
