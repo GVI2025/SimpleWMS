@@ -68,6 +68,8 @@ Observation:
 Use the branch `course/git/git-rebase-without-conflict`.
 
 1. Rebase its content onto your current branch.
+   - `git checkout course/git/git-rebase-without-conflict`
+   - `git rebase TTC/git-rebase`
 2. Compare the result to a merge.
 
 ---
