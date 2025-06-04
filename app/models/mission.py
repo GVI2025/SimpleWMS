@@ -25,6 +25,7 @@ class Mission(Base):
     id = Column(String, primary_key=True, default=lambda: str(uuid4()))
     type = Column(Enum(TypeMission), nullable=False)
     etat = Column(Enum(EtatMission), nullable=False, default=EtatMission.A_FAIRE)
+    urgent = Column(Boolean, default=False, nullable=False)
     article_id = Column(String, ForeignKey("articles.id"), nullable=False)
     source_id = Column(String, ForeignKey("emplacements.id"), nullable=True)
     destination_id = Column(String, ForeignKey("emplacements.id"), nullable=True)
