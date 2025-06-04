@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Enum, ForeignKey, Integer, DateTime, String
+from sqlalchemy import Column, Boolean, Enum, ForeignKey, Integer, DateTime, String
 from sqlalchemy.orm import relationship
 from uuid import uuid4
 import enum
@@ -37,3 +37,5 @@ class Mission(Base):
     source = relationship("Emplacement", foreign_keys=[source_id])
     destination = relationship("Emplacement", foreign_keys=[destination_id])
     agent = relationship("Agent")
+
+    urgent = Column(Boolean, default=False, nullable=False) #Lara : Feature A

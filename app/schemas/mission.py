@@ -26,6 +26,7 @@ class MissionBase(BaseModel):
     agent_id: Optional[str]
     date_creation: datetime
     date_execution: Optional[datetime] = None
+    urgent: bool = False #Lara : Feature A
 
 class MissionCreate(MissionBase):
     pass
