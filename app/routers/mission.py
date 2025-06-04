@@ -8,6 +8,7 @@ from app.database.database import get_db
 
 router = APIRouter(prefix="/missions", tags=["Missions"])
 
+##todo: fix list_missions to use pagination
 @router.get("/", response_model=List[MissionRead])
 def list_missions(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     return mission_service.list_missions(db, skip, limit)
