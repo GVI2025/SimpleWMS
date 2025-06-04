@@ -4,17 +4,17 @@ from enum import Enum
 from datetime import datetime
 
 class TypeMission(str, Enum):
-    DEPLACEMENT = "Déplacement"
-    REAPPRO = "Réapprovisionnement"
-    INVENTAIRE = "Inventaire"
-    RECEPTION = "Réception"
-    PREPARATION = "Préparation commande"
+    DEPLACEMENT = "DEPLACEMENT"
+    REAPPRO = "REAPPRO"
+    INVENTAIRE = "INVENTAIRE"
+    RECEPTION = "RECEPTION"
+    PREPARATION = "PREPARATION"
 
 class EtatMission(str, Enum):
-    A_FAIRE = "À faire"
-    EN_COURS = "En cours"
-    TERMINE = "Terminé"
-    ECHOUE = "Échoué"
+    A_FAIRE = "A_FAIRE"
+    EN_COURS = "EN_COURS"
+    TERMINE = "TERMINE"
+    ECHOUE = "ECHOUE"
 
 class MissionBase(BaseModel):
     type: TypeMission
@@ -26,6 +26,7 @@ class MissionBase(BaseModel):
     agent_id: Optional[str]
     date_creation: datetime
     date_execution: Optional[datetime] = None
+    urgent: Optional[bool] = False
 
 class MissionCreate(MissionBase):
     pass
