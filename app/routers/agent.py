@@ -8,7 +8,7 @@ from app.database.database import get_db
 
 router = APIRouter(prefix="/agents", tags=["Agents"])
 
-@router.get("/", response_model=List[AgentRead])
+@router.get("?actif=true", response_model=List[AgentRead])
 def list_agents(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     return agent_service.list_agents(db, skip, limit)
 
