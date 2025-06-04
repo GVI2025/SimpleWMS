@@ -32,6 +32,7 @@ class Mission(Base):
     agent_id = Column(String, ForeignKey("agents.id"), nullable=True)
     date_creation = Column(DateTime, default=datetime.utcnow)
     date_execution = Column(DateTime, nullable=True)
+    urgent = Column(bool, nullable=False)
 
     article = relationship("Article")
     source = relationship("Emplacement", foreign_keys=[source_id])

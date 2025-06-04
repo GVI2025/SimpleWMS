@@ -28,13 +28,16 @@ class MissionBase(BaseModel):
     date_execution: Optional[datetime] = None
 
 class MissionCreate(MissionBase):
+    urgent : False
     pass
 
 class MissionUpdate(MissionBase):
+    urgent : False
     pass
 
 class MissionRead(MissionBase):
     id: str
+    urgent: False
 
     class Config:
         orm_mode = True
