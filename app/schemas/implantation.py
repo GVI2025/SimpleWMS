@@ -5,6 +5,7 @@ class ImplantationBase(BaseModel):
     emplacement_id: str
     quantite: int
     seuil_minimum: int
+    commentaire: Optional[str] = None
 
 class ImplantationCreate(ImplantationBase):
     pass
