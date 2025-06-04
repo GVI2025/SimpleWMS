@@ -1,6 +1,6 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.orm import Session
-from typing import List
+from typing import List, Optional
 
 from app.schemas.article import ArticleRead, ArticleCreate, ArticleUpdate
 from app.services import article as article_service
@@ -9,7 +9,15 @@ from app.database.database import get_db
 router = APIRouter(prefix="/articles", tags=["Articles"])
 
 @router.get("/", response_model=List[ArticleRead])
-def list_articles(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+def list_articles(
+    skip: int = 0,
+    limit: int = 100,
+    sku: Optional[str] = Query(None, description="Filter by SKU"),
+    db: Session = Depends(get_db)
+):
+    if sku:
+        article = article_service.get_article_by_sku(db, sku)
+        return [article] if article else []
     return article_service.list_articles(db, skip, limit)
 
 @router.post("/", response_model=ArticleRead)
