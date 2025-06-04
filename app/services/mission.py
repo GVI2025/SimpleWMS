@@ -6,7 +6,8 @@ def get_mission(db: Session, mission_id: str):
     return db.query(MissionModel).filter(MissionModel.id == mission_id).first()
 
 def list_missions(db: Session, skip: int = 0, limit: int = 100):
-    return db.query(MissionModel).offset(skip).limit(limit).all()
+    return db.query(MissionModel).filter(MissionModel.status.notin_(["terminated", "failed"])).offset(skip).limit(limit).all()
+    #return db.query(MissionModel).offset(skip).limit(limit).all()
 
 def create_mission(db: Session, mission: MissionCreate):
     db_mission = MissionModel(**mission.dict())
