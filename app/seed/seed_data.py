@@ -976,9 +976,5 @@ def add_new_entries():
         db.close()
 
 if __name__ == "__main__":
-<<<<<<< HEAD
-    init_seed_data()
-=======
     seed()
     add_new_entries()
->>>>>>> 934523f (chore: adding local test data)
