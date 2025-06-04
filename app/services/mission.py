@@ -1,12 +1,18 @@
 from sqlalchemy.orm import Session
 from app.models import Mission as MissionModel
 from app.schemas.mission import MissionCreate, MissionUpdate
+from app.models.mission import EtatMission
 
 def get_mission(db: Session, mission_id: str):
     return db.query(MissionModel).filter(MissionModel.id == mission_id).first()
 
-def list_missions(db: Session, skip: int = 0, limit: int = 100):
-    return db.query(MissionModel).offset(skip).limit(limit).all()
+def list_missions(db: Session, skip: int = 0, limit: int = 100, include_finished: bool = False):
+    query = db.query(MissionModel)
+    
+    if not include_finished:
+        query = query.filter(~MissionModel.etat.in_([EtatMission.TERMINE, EtatMission.ECHOUE]))
+    
+    return query.offset(skip).limit(limit).all()
 
 def create_mission(db: Session, mission: MissionCreate):
     db_mission = MissionModel(**mission.dict())

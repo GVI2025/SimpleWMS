@@ -9,8 +9,13 @@ from app.database.database import get_db
 router = APIRouter(prefix="/missions", tags=["Missions"])
 
 @router.get("/", response_model=List[MissionRead])
-def list_missions(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
-    return mission_service.list_missions(db, skip, limit)
+def list_missions(
+    skip: int = 0, 
+    limit: int = 100, 
+    include_finished: bool = False,
+    db: Session = Depends(get_db)
+):
+    return mission_service.list_missions(db, skip=skip, limit=limit, include_finished=include_finished)
 
 @router.post("/", response_model=MissionRead)
 def create_mission(mission: MissionCreate, db: Session = Depends(get_db)):
