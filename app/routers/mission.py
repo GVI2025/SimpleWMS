@@ -36,3 +36,5 @@ def delete_mission(mission_id: str, db: Session = Depends(get_db)):
     if not deleted:
         raise HTTPException(status_code=404, detail="Mission not found")
     return deleted
+
+# TODO
