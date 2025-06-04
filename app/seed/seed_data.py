@@ -974,7 +974,6 @@ def add_new_entries():
         db.close()
 
 
-<<<<<<< HEAD
 def add_new_reception():
     db = SessionLocal()
     try:
@@ -1012,7 +1011,7 @@ def add_new_reception():
     except Exception as e:
         db.rollback()
         print(f"Erreur lors de l'ajout de la réception: {e}")
-=======
+
 def add_new_mission():
     db = SessionLocal()
     try:
@@ -1062,7 +1061,6 @@ def add_new_mission():
     except Exception as e:
         db.rollback()
         print(f"Erreur lors de l'ajout de la mission: {e}")
->>>>>>> c8e4acb87095da6daae74dbdc3d21d2fe7f78b15
     finally:
         db.close()
 
@@ -1070,8 +1068,5 @@ def add_new_mission():
 if __name__ == "__main__":
     seed()
     add_new_entries()
-<<<<<<< HEAD
     add_new_reception()
-=======
     add_new_mission()
->>>>>>> c8e4acb87095da6daae74dbdc3d21d2fe7f78b15
