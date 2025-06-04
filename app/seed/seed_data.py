@@ -974,55 +974,43 @@ def add_new_entries():
         db.close()
 
 
-def add_new_mission():
+def add_new_reception():
     db = SessionLocal()
     try:
-        # Get an active agent for the mission
-        agent = db.query(Agent).filter(Agent.actif == True).first()
-
-        # Get a source and destination emplacement
-        source_emplacement = db.query(Emplacement).filter(Emplacement.type == 'STOCKAGE').first()
-        destination_emplacement = db.query(Emplacement).filter(Emplacement.type == 'VENTE').first()
-
-        # Get an article
+        # Get a random article and emplacement for the reception
         article = db.query(Article).filter(Article.id == '10d55c46-9840-43f0-8dc5-23f8453b16d6').first()
+        emplacement = db.query(Emplacement).filter(Emplacement.type == 'RECEPTION').first()
 
-        if not agent or not source_emplacement or not destination_emplacement or not article:
-            print("Required entities not found in database")
+        if not article or not emplacement:
+            print("Article or suitable emplacement not found")
             return None
 
-        # Create and add a new Mission
-        new_mission = Mission(
+        # Create and add a new Reception
+        new_reception = Reception(
             id=str(uuid.uuid4()),
-            type='DEPLACEMENT',
-            etat='A_FAIRE',
             article_id=article.id,
-            source_id=source_emplacement.id,
-            destination_id=destination_emplacement.id,
-            quantite=15,
-            agent_id=agent.id,
-            date_creation=datetime.now(),
-            date_execution=None
+            quantite=50,
+            fournisseur='Fournisseur XYZ',
+            date_reception=datetime.now(),
+            emplacement_id=emplacement.id
         )
 
         # Add to database
-        db.add(new_mission)
+        db.add(new_reception)
         db.commit()
 
-        # Print confirmation with details
-        print(f"Mission ajoutée avec succès: ID={new_mission.id}")
-        print(f"Type: {new_mission.type}, État: {new_mission.etat}")
+        # Print confirmation with ID
+        print(f"Réception ajoutée avec succès: ID={new_reception.id}")
         print(f"Article: {article.designation} (SKU: {article.sku})")
-        print(f"Source: {source_emplacement.code}, Destination: {destination_emplacement.code}")
-        print(f"Quantité: {new_mission.quantite}")
-        print(f"Agent assigné: {agent.nom}")
-        print(f"Date de création: {new_mission.date_creation}")
+        print(f"Emplacement: {emplacement.code}")
+        print(f"Quantité: {new_reception.quantite}")
+        print(f"Date: {new_reception.date_reception}")
 
-        return new_mission.id
+        return new_reception.id
 
     except Exception as e:
         db.rollback()
-        print(f"Erreur lors de l'ajout de la mission: {e}")
+        print(f"Erreur lors de l'ajout de la réception: {e}")
     finally:
         db.close()
 
@@ -1030,4 +1018,4 @@ def add_new_mission():
 if __name__ == "__main__":
     seed()
     add_new_entries()
-    add_new_mission()
+    add_new_reception()
