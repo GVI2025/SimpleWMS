@@ -9,8 +9,13 @@ from app.database.database import get_db
 router = APIRouter(prefix="/agents", tags=["Agents"])
 
 @router.get("/", response_model=List[AgentRead])
-def list_agents(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
-    return agent_service.list_agents(db, skip, limit)
+def list_agents(
+    skip: int = 0,
+    limit: int = 100,
+    actif: Optional[bool] = Query(None, description="Lister seulement les agents actifs"),
+    db: Session = Depends(get_db)
+):
+    return agent_service.list_agents(db, skip=skip, limit=limit, actif=actif)
 
 @router.post("/", response_model=AgentRead)
 def create_agent(agent: AgentCreate, db: Session = Depends(get_db)):
