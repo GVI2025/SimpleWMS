@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
-from typing import List
+from typing import List, Optional
 
 from app.schemas.agent import AgentRead, AgentCreate, AgentUpdate
 from app.services import agent as agent_service
@@ -9,8 +9,8 @@ from app.database.database import get_db
 router = APIRouter(prefix="/agents", tags=["Agents"])
 
 @router.get("/", response_model=List[AgentRead])
-def list_agents(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
-    return agent_service.list_agents(db, skip, limit)
+def list_agents(skip: int = 0, limit: int = 100, actif: Optional[bool] = None, db: Session = Depends(get_db)):
+    return agent_service.list_agents(db, skip, limit, actif)
 
 @router.post("/", response_model=AgentRead)
 def create_agent(agent: AgentCreate, db: Session = Depends(get_db)):
@@ -25,6 +25,7 @@ def get_agent(agent_id: str, db: Session = Depends(get_db)):
     if not agent:
         raise HTTPException(status_code=404, detail="Agent not found")
     return agent
+
 
 @router.put("/{agent_id}", response_model=AgentRead)
 def update_agent(agent_id: str, agent: AgentUpdate, db: Session = Depends(get_db)):
