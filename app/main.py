@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+import uvicorn
 
 from app.routers import article, agent, emplacement, commande, implantation, reception, mission
 
@@ -19,3 +20,6 @@ app.include_router(mission.router)
 @app.get("/")
 async def root():
     return {"message": "Welcome to SimpleWMS!"}
+
+if __name__ == "__main__":
+    uvicorn.run(app, host="0.0.0.0", port=8000)
