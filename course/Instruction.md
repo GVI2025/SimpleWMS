@@ -80,12 +80,17 @@ The branch `course/git/git-merge-without-conflict` is clean and can be merged di
 Now try merging `course/git/git-merge-with-conflict` into your branch.
 
 1. Attempt the merge.
+   - J'ai essayé
 2. Resolve the conflicts.
+   - J'ai résolu (tout s'ajoutait, aucun vrai conflit)
 3. Commit the result.
+   - C'est fait
 
 Observation:
 - What files conflicted?
+   - app/seed/seed-data.py
 - How did Git mark the conflict?
+   - Dans l'éditeur de code (VSCode), dans le fichier j'ai pu utiliser un bouton qui me proposait de fusionner les différences
 
 ---
 
