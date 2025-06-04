@@ -1,3 +1,5 @@
+from typing import Optional
+
 from sqlalchemy.orm import Session
 from app.models import Article as ArticleModel
 from app.schemas.article import ArticleCreate, ArticleUpdate
@@ -8,8 +10,11 @@ def get_article(db: Session, article_id: str):
 def get_article_by_sku(db: Session, sku: str):
     return db.query(ArticleModel).filter(ArticleModel.sku == sku).first()
 
-def list_articles(db: Session, skip: int = 0, limit: int = 100):
-    return db.query(ArticleModel).offset(skip).limit(limit).all()
+def list_articles(db: Session, skip: int = 0, limit: int = 100, sku: Optional[str] = None):
+    query = db.query(ArticleModel)
+    if sku:
+        query = query.filter(ArticleModel.sku == sku)
+    return query.offset(skip).limit(limit).all()
 
 def create_article(db: Session, article: ArticleCreate):
     db_article = ArticleModel(**article.dict())
