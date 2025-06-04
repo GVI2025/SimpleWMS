@@ -1,0 +1,21 @@
+meta {
+  name: "Créer une mission urgente"
+  type: "http"
+  seq: 2
+}
+
+post {
+  url: "{{baseUrl}}/missions"
+  body: json {
+    {
+      "type": "DEPLACEMENT",
+      "etat": "A_FAIRE",
+      "article_id": "10d55c46-9840-43f0-8dc5-23f8453b16d6",
+      "source_id": "f5a27b58-0f0f-4073-87bd-3e2732aa27f0",
+      "destination_id": "285ca606-9542-4c10-8b87-148e0b535c7c",
+      "quantite": 5,
+      "urgent": true,
+      "date_creation": "2024-03-19T14:30:00"
+    }
+  }
+} 
