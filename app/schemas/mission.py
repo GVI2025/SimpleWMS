@@ -23,6 +23,7 @@ class MissionBase(BaseModel):
     source_id: Optional[str]
     destination_id: Optional[str]
     quantite: int
+    urgent: bool = False
     agent_id: Optional[str]
     date_creation: datetime
     date_execution: Optional[datetime] = None
