@@ -1,10 +1,13 @@
 from pydantic import BaseModel
+from typing import Optional
+
 
 class ImplantationBase(BaseModel):
     article_id: str
     emplacement_id: str
     quantite: int
     seuil_minimum: int
+    commentaire: Optional[str] = None
 
 class ImplantationCreate(ImplantationBase):
     pass
