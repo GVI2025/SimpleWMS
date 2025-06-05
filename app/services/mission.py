@@ -10,6 +10,8 @@ def list_missions(db: Session, skip: int = 0, limit: int = 100):
 
 def create_mission(db: Session, mission: MissionCreate):
     db_mission = MissionModel(**mission.dict())
+    db_mission.type = mission.type.name
+    db_mission.etat = mission.etat.name
     db.add(db_mission)
     db.commit()
     db.refresh(db_mission)
@@ -20,6 +22,10 @@ def update_mission(db: Session, mission_id: str, mission_data: MissionUpdate):
     if db_mission:
         for key, value in mission_data.dict().items():
             setattr(db_mission, key, value)
+            if key == 'type':
+                db_mission.type = value.name
+            if key == 'etat':
+                db_mission.etat = value.name
         db.commit()
         db.refresh(db_mission)
     return db_mission
