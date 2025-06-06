@@ -83,6 +83,22 @@ class TestCommandeRouter:
         # Verify service function was called
         mock_list_commandes.assert_called_once()
 
+    @patch('app.routers.commande.commande_service.list_commandes')
+    def test_list_commandes_with_designation(self, mock_list_commandes):
+        # Configure mock to return only commandes with the matching article designation
+        mock_list_commandes.return_value = [mock_commande_model]
+
+        # Test the endpoint with a designation filter
+        response = client.get("/commandes/?designation=perceuse")
+
+        # Verify response
+        assert response.status_code == 200
+        assert len(response.json()) == 1
+        assert response.json()[0]["id"] == mock_commande_model.id
+
+        # Verify service function was called with the correct args
+        mock_list_commandes.assert_called_once_with(ANY, 0, 100, "perceuse")
+
     @patch('app.routers.commande.commande_service.get_commande_by_reference')
     @patch('app.routers.commande.commande_service.create_commande')
     def test_create_commande_success(self, mock_create_commande, mock_get_by_reference):
