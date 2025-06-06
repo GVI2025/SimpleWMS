@@ -7,8 +7,6 @@ from app.models import Emplacement as EmplacementModel
 
 client = TestClient(app)
 
-# Fixtures and mock data can be added here as needed
-
 mock_emplacement_data = {
     "id": "E12345",
     "code": "EMPL001",
