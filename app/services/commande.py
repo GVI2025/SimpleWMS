@@ -1,5 +1,6 @@
 from sqlalchemy.orm import Session
-from app.models import Commande as CommandeModel, LigneCommande as LigneModel
+from sqlalchemy import or_
+from app.models import Commande as CommandeModel, LigneCommande as LigneModel, Article
 from app.schemas.commande import CommandeCreate, CommandeUpdate
 
 def get_commande(db: Session, commande_id: str):
@@ -8,8 +9,13 @@ def get_commande(db: Session, commande_id: str):
 def get_commande_by_reference(db: Session, reference: str):
     return db.query(CommandeModel).filter(CommandeModel.reference == reference).first()
 
-def list_commandes(db: Session, skip: int = 0, limit: int = 100):
-    return db.query(CommandeModel).offset(skip).limit(limit).all()
+def list_commandes(db: Session, skip: int = 0, limit: int = 100, designation: str = None):
+    query = db.query(CommandeModel)
+    if designation:
+        query = query.join(CommandeModel.lignes).join(LigneModel.article).filter(
+            Article.designation.ilike(f"%{designation}%")
+        ).distinct()
+    return query.offset(skip).limit(limit).all()
 
 def create_commande(db: Session, commande: CommandeCreate):
     db_commande = CommandeModel(
