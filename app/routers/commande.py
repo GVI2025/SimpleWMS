@@ -9,8 +9,16 @@ from app.database.database import get_db
 router = APIRouter(prefix="/commandes", tags=["Commandes"])
 
 @router.get("/", response_model=List[CommandeRead])
-def list_commandes(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
-    return commande_service.list_commandes(db, skip, limit)
+def list_commandes(
+    skip: int = 0,
+    limit: int = 100,
+    designation: str = None,
+    db: Session = Depends(get_db)
+):
+    """
+    List commandes, optionally filtering by partial article designation.
+    """
+    return commande_service.list_commandes(db, skip, limit, designation=designation)
 
 @router.post("/", response_model=CommandeRead)
 def create_commande(commande: CommandeCreate, db: Session = Depends(get_db)):

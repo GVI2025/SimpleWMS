@@ -225,3 +225,23 @@ class TestCommandeRouter:
         # Verify response
         assert response.status_code == 404
         assert "not found" in response.json()["detail"]
+
+    def test_list_commandes_by_designation(client, db_session, article_factory, commande_factory, ligne_commande_factory):
+        # Crée deux articles
+        perceuse = article_factory(designation="Perceuse Bosch")
+        visseuse = article_factory(designation="Visseuse Makita")
+        # Crée deux commandes
+        commande1 = commande_factory()
+        commande2 = commande_factory()
+        # Ajoute une ligne de commande avec la perceuse à la commande1
+        ligne_commande_factory(commande=commande1, article=perceuse)
+        # Ajoute une ligne de commande avec la visseuse à la commande2
+        ligne_commande_factory(commande=commande2, article=visseuse)
+        db_session.commit()
+
+        # Recherche "perceuse"
+        response = client.get("/commandes?designation=perceuse")
+        assert response.status_code == 200
+        results = response.json()
+        assert len(results) == 1
+        assert any("perceuse" in ligne["article"]["designation"].lower() for commande in results for ligne in commande["lignes"])
