@@ -25,8 +25,8 @@ mock_emplacement_create = EmplacementCreate(
 mock_emplacement_update = EmplacementUpdate(
     code="EMPL001",
     type=TypeEmplacement.STOCKAGE.value,
-    capacite_poids_kg=2000.0,
-    capacite_volume_m3=20.0
+    capacite_poids_kg=1000.0,
+    capacite_volume_m3=10.0
 )
 
 mock_emplacement_model = EmplacementModel(
@@ -98,12 +98,7 @@ class TestEmplacementRouter:
 
     @patch('app.routers.emplacement.emplacement_service.update_emplacement')
     def test_update_emplacement_success(self, mock_update):
-        mock_emplacement_model.code = mock_emplacement_update.code
-        mock_emplacement_model.type = mock_emplacement_update.type
-        mock_emplacement_model.capacite_poids_kg = mock_emplacement_update.capacite_poids_kg
-        mock_emplacement_model.capacite_volume_m3 = mock_emplacement_update.capacite_volume_m3
         mock_update.return_value = mock_emplacement_model
-        
 
         response = client.put("/emplacements/12345", json={
             "code": mock_emplacement_update.code,
