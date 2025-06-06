@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
-from typing import List
+from typing import List, Optional
 
 from app.schemas.commande import CommandeRead, CommandeCreate, CommandeUpdate
 from app.services import commande as commande_service
@@ -9,8 +9,13 @@ from app.database.database import get_db
 router = APIRouter(prefix="/commandes", tags=["Commandes"])
 
 @router.get("/", response_model=List[CommandeRead])
-def list_commandes(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
-    return commande_service.list_commandes(db, skip, limit)
+def list_commandes(
+    skip: int = 0,
+    limit: int = 100,
+    designation: Optional[str] = None,
+    db: Session = Depends(get_db)
+):
+    return commande_service.list_commandes(db, skip, limit, designation)
 
 @router.post("/", response_model=CommandeRead)
 def create_commande(commande: CommandeCreate, db: Session = Depends(get_db)):
