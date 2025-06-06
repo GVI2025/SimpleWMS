@@ -2,14 +2,23 @@ from sqlalchemy.orm import Session
 from app.models import Commande as CommandeModel, LigneCommande as LigneModel
 from app.schemas.commande import CommandeCreate, CommandeUpdate
 
+
 def get_commande(db: Session, commande_id: str):
     return db.query(CommandeModel).filter(CommandeModel.id == commande_id).first()
+
 
 def get_commande_by_reference(db: Session, reference: str):
     return db.query(CommandeModel).filter(CommandeModel.reference == reference).first()
 
-def list_commandes(db: Session, skip: int = 0, limit: int = 100):
-    return db.query(CommandeModel).offset(skip).limit(limit).all()
+
+def list_commandes(db: Session, designation: str, skip: int = 0, limit: int = 100):
+    if designation is None:
+        return db.query(CommandeModel).offset(skip).limit(limit).all()
+
+    return db.query(CommandeModel).filter(CommandeModel.lignes.any(
+        LigneModel.article.has(designation=designation))
+    ).offset(skip).limit(limit).all()
+
 
 def create_commande(db: Session, commande: CommandeCreate):
     db_commande = CommandeModel(
@@ -31,6 +40,7 @@ def create_commande(db: Session, commande: CommandeCreate):
     db.refresh(db_commande)
     return db_commande
 
+
 def update_commande(db: Session, commande_id: str, commande_data: CommandeUpdate):
     db_commande = get_commande(db, commande_id)
     if db_commande:
@@ -39,6 +49,7 @@ def update_commande(db: Session, commande_id: str, commande_data: CommandeUpdate
         db.commit()
         db.refresh(db_commande)
     return db_commande
+
 
 def delete_commande(db: Session, commande_id: str):
     db_commande = get_commande(db, commande_id)
