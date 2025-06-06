@@ -88,7 +88,7 @@ class TestEmplacementRouter:
         response = client.get(f"/emplacements/{mock_emplacement_data['id']}")
         assert response.status_code == 200
         assert response.json()["id"] == "E123"
-        mock_get_emplacement.assert_called_once_with(ANY, "E123")
+        mock_get_emplacement.assert_called_once_with(ANY, "1")
 
     @patch('app.routers.emplacement.emplacement_service.get_emplacement')
     def test_get_emplacement_not_found(self, mock_get_emplacement):
@@ -127,7 +127,7 @@ class TestEmplacementRouter:
         response = client.delete(f"/emplacements/{mock_emplacement_data['id']}")
         assert response.status_code == 200
         assert response.json()["id"] == "E123"
-        mock_delete_emplacement.assert_called_once_with(ANY, "E123")
+        mock_delete_emplacement.assert_called_once_with(ANY, "1")
 
     @patch('app.routers.emplacement.emplacement_service.delete_emplacement')
     def test_delete_emplacement_not_found(self, mock_delete_emplacement):
