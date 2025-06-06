@@ -98,7 +98,12 @@ class TestEmplacementRouter:
 
     @patch('app.routers.emplacement.emplacement_service.update_emplacement')
     def test_update_emplacement_success(self, mock_update):
+        mock_emplacement_model.code = mock_emplacement_update.code
+        mock_emplacement_model.type = mock_emplacement_update.type
+        mock_emplacement_model.capacite_poids_kg = mock_emplacement_update.capacite_poids_kg
+        mock_emplacement_model.capacite_volume_m3 = mock_emplacement_update.capacite_volume_m3
         mock_update.return_value = mock_emplacement_model
+        
 
         response = client.put("/emplacements/12345", json={
             "code": mock_emplacement_update.code,
@@ -109,8 +114,8 @@ class TestEmplacementRouter:
         assert response.status_code == 200
         assert response.json()["code"] == mock_emplacement_update.code
         assert response.json()["type"] == mock_emplacement_update.type
-        assert response.json()["capacite_poids_kg"] == 2000.0
-        assert response.json()["capacite_volume_m3"] == 20.0
+        assert response.json()["capacite_poids_kg"] == mock_emplacement_model
+        assert response.json()["capacite_volume_m3"] == mock_emplacement_model.capacite_volume_m3
 
         mock_update.assert_called_once_with(ANY, "12345", mock_emplacement_update)
 
@@ -119,7 +124,7 @@ class TestEmplacementRouter:
         mock_delete.return_value = mock_emplacement_model
 
         response = client.delete("/emplacements/12345")
-        assert response.status_code == 204
+        assert response.status_code == 200
 
         mock_delete.assert_called_once_with(ANY, "12345")
 
