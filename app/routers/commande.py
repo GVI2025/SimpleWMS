@@ -9,7 +9,10 @@ from app.database.database import get_db
 router = APIRouter(prefix="/commandes", tags=["Commandes"])
 
 @router.get("/", response_model=List[CommandeRead])
-def list_commandes(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+def list_commandes(designation: str = None, skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+    if designation != None:
+        return commande_service.list_commandes_with_designation(db, skip, limit, designation)
+
     return commande_service.list_commandes(db, skip, limit)
 
 @router.post("/", response_model=CommandeRead)
