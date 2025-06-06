@@ -47,7 +47,7 @@ mock_emplacement_list = [
         capacite_volume_m3=3.0
     ),
     EmplacementModel(
-        id="1",
+        id="2",
         code="E123",
         type=TypeEmplacement.STOCKAGE.value,
         capacite_poids_kg=1000,
@@ -65,124 +65,73 @@ class TestEmplacementRouter:
         assert len(response.json()) == 2
         mock_list_emplacements.assert_called_once()
 
-    ''' @patch('app.routers.emplacement.emplacement_service.create_emplacement')
-    def test_create_emplacement_success(self, mock_create_emplacement):
-        # Configure mock
+    @patch('app.routers.emplacement.emplacement_service.get_emplacement_by_code')
+    @patch('app.routers.emplacement.emplacement_service.create_emplacement')
+    def test_create_emplacement_success(self, mock_create_emplacement, mock_get_by_code):
+        mock_get_by_code.return_value = None
         mock_create_emplacement.return_value = mock_emplacement_model
-
-        # Test the endpoint
-        response = client.post("/emplacements/", json={
-            "article_id": "A12345",
-            "emplacement_id": "E12345",
-            "quantite": 50,
-            "seuil_minimum": 10
-        })
-
-        # Verify response
+        response = client.post("/emplacements/", json=mock_emplacement_create.dict())
         assert response.status_code == 200
-        assert response.json()["article_id"] == "A12345"
-        assert response.json()["quantite"] == 50
-
-        # Verify service function was called correctly
+        assert response.json()["code"] == "E123"
         mock_create_emplacement.assert_called_once()
+
+    @patch('app.routers.emplacement.emplacement_service.get_emplacement_by_code')
+    def test_create_emplacement_duplicate(self, mock_get_by_code):
+        mock_get_by_code.return_value = mock_emplacement_model
+        response = client.post("/emplacements/", json=mock_emplacement_create.dict())
+        assert response.status_code == 400
+        assert "already exists" in response.json()["detail"]
 
     @patch('app.routers.emplacement.emplacement_service.get_emplacement')
     def test_get_emplacement_success(self, mock_get_emplacement):
-        # Configure mock
         mock_get_emplacement.return_value = mock_emplacement_model
-
-        # Test the endpoint
         response = client.get(f"/emplacements/{mock_emplacement_data['id']}")
-
-        # Verify response
         assert response.status_code == 200
-        assert response.json()["id"] == mock_emplacement_data["id"]
-
-        # Verify service function was called correctly
-        mock_get_emplacement.assert_called_once_with(ANY, mock_emplacement_data["id"])
+        assert response.json()["id"] == "E123"
+        mock_get_emplacement.assert_called_once_with(ANY, "E123")
 
     @patch('app.routers.emplacement.emplacement_service.get_emplacement')
     def test_get_emplacement_not_found(self, mock_get_emplacement):
-        # Configure mock
         mock_get_emplacement.return_value = None
-
-        # Test the endpoint
         response = client.get("/emplacements/nonexistent")
-
-        # Verify response
         assert response.status_code == 404
         assert "not found" in response.json()["detail"]
 
     @patch('app.routers.emplacement.emplacement_service.update_emplacement')
     def test_update_emplacement_success(self, mock_update_emplacement):
-        # Configure mock
-        updated_emplacement = mock_emplacement_model
-        updated_emplacement.quantite = 75
-        updated_emplacement.seuil_minimum = 15
-        mock_update_emplacement.return_value = updated_emplacement
-
-        # Test the endpoint
+        updated = mock_emplacement_model
+        updated.capacite_poids_kg = 1000.0
+        updated.capacite_volume_m3 = 6.0
+        mock_update_emplacement.return_value = updated
         response = client.put(
             f"/emplacements/{mock_emplacement_data['id']}",
-            json={
-                "article_id": "A12345",
-                "emplacement_id": "E12345",
-                "quantite": 75,
-                "seuil_minimum": 15
-            }
+            json=mock_emplacement_update.dict()
         )
-
-        # Verify response
         assert response.status_code == 200
-        assert response.json()["quantite"] == 75
-        assert response.json()["seuil_minimum"] == 15
-
-        # Verify service function was called correctly
+        assert response.json()["capacite_poids_kg"] == 1000.0
         mock_update_emplacement.assert_called_once()
 
     @patch('app.routers.emplacement.emplacement_service.update_emplacement')
     def test_update_emplacement_not_found(self, mock_update_emplacement):
-        # Configure mock
         mock_update_emplacement.return_value = None
-
-        # Test the endpoint
         response = client.put(
             "/emplacements/nonexistent",
-            json={
-                "article_id": "A12345",
-                "emplacement_id": "E12345",
-                "quantite": 75,
-                "seuil_minimum": 15
-            }
+            json=mock_emplacement_update.dict()
         )
-
-        # Verify response
         assert response.status_code == 404
         assert "not found" in response.json()["detail"]
 
     @patch('app.routers.emplacement.emplacement_service.delete_emplacement')
     def test_delete_emplacement_success(self, mock_delete_emplacement):
-        # Configure mock
         mock_delete_emplacement.return_value = mock_emplacement_model
-
-        # Test the endpoint
         response = client.delete(f"/emplacements/{mock_emplacement_data['id']}")
-
-        # Verify response
         assert response.status_code == 200
-        assert response.json()["id"] == mock_emplacement_data["id"]
-
-        # Verify service function was called correctly
-        mock_delete_emplacement.assert_called_once_with(ANY, mock_emplacement_data["id"])
+        assert response.json()["id"] == "E123"
+        mock_delete_emplacement.assert_called_once_with(ANY, "E123")
 
     @patch('app.routers.emplacement.emplacement_service.delete_emplacement')
     def test_delete_emplacement_not_found(self, mock_delete_emplacement):
-        # Configure mock
         mock_delete_emplacement.return_value = None
-
-        # Test the endpoint
         response = client.delete("/emplacements/nonexistent")
-
-        # Verify response
         assert response.status_code == 404
-        assert "not found" in response.json()["detail"] '''
+        assert "not found" in response.json()["detail"]
