@@ -8,10 +8,6 @@ from app.database.database import get_db
 
 router = APIRouter(prefix="/commandes", tags=["Commandes"])
 
-@router.get("/", response_model=List[CommandeRead])
-def list_commandes(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
-    return commande_service.list_commandes(db, skip, limit)
-
 @router.post("/", response_model=CommandeRead)
 def create_commande(commande: CommandeCreate, db: Session = Depends(get_db)):
     existing = commande_service.get_commande_by_reference(db, commande.reference)
@@ -39,3 +35,24 @@ def delete_commande(commande_id: str, db: Session = Depends(get_db)):
     if not deleted:
         raise HTTPException(status_code=404, detail="Commande not found")
     return deleted
+
+@router.get("/", response_model=List[CommandeRead])
+def read_commandes(
+    skip: int = 0, 
+    limit: int = 100, 
+    designation: str = None, 
+    db: Session = Depends(get_db)
+):
+    """
+    Retrieve all commandes.
+    
+    Optional filtering by article designation using the 'designation' query parameter.
+    Example: GET /commandes?designation=perceuse
+    """
+    commandes = commande_service.list_commandes(
+        db, 
+        skip=skip, 
+        limit=limit, 
+        designation=designation
+    )
+    return commandes
