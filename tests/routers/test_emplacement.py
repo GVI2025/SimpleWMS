@@ -48,7 +48,7 @@ mock_emplacement_list = [
     EmplacementModel(
         id="E67890",
         code="EMPL002",
-        type=TypeEmplacement.VENTE,
+        type=TypeEmplacement.VENTE.value,
         capacite_poids_kg=500.0,
         capacite_volume_m3=5.0
     )
@@ -92,7 +92,7 @@ class TestEmplacementRouter:
         response = client.get("/emplacements/12345")
         assert response.status_code == 200
         assert response.json()["code"] == "EMPL001"
-        assert response.json()["type"] == "STOCKAGE"
+        assert response.json()["type"] == TypeEmplacement.STOCKAGE.value
 
         mock_get.assert_called_once_with(ANY, "12345")
 
