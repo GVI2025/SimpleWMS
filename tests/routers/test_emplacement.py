@@ -100,7 +100,12 @@ class TestEmplacementRouter:
     def test_update_emplacement_success(self, mock_update):
         mock_update.return_value = mock_emplacement_model
 
-        response = client.put("/emplacements/12345", json=mock_emplacement_update.dict())
+        response = client.put("/emplacements/12345", json={
+            "code": mock_emplacement_update.code,
+            "type": mock_emplacement_update.type,
+            "capacite_poids_kg": mock_emplacement_update.capacite_poids_kg,
+            "capacite_volume_m3": mock_emplacement_update.capacite_volume_m3
+        })
         assert response.status_code == 200
         assert response.json()["code"] == mock_emplacement_update.code
         assert response.json()["type"] == mock_emplacement_update.type
@@ -132,9 +137,13 @@ class TestEmplacementRouter:
     def test_create_emplacement_already_exists(self, mock_create):
         mock_create.side_effect = Exception("Emplacement with this code already exists.")
 
-        response = client.post("/emplacements/", json=mock_emplacement_create.dict())
+        response = client.post("/emplacements/", json={
+            "code": mock_emplacement_create.code,
+            "type": mock_emplacement_create.type,
+            "capacite_poids_kg": mock_emplacement_create.capacite_poids_kg,
+            "capacite_volume_m3": mock_emplacement_create.capacite_volume_m3
+        })
         assert response.status_code == 400
         assert "already exists" in response.json()["detail"]
 
         mock_create.assert_called_once()
-
