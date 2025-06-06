@@ -225,3 +225,10 @@ class TestCommandeRouter:
         # Verify response
         assert response.status_code == 404
         assert "not found" in response.json()["detail"]
+
+    @patch('app.routers.commande.commande_service.list_commandes')
+    def test_list_commandes_by_designation(self, mock_list_commandes):
+        mock_list_commandes.return_value = [mock_commande_model]
+        response = client.get("/commandes/?designation=perceuse")
+        assert response.status_code == 200
+        mock_list_commandes.assert_called_once_with(ANY, 0, 100, "perceuse")

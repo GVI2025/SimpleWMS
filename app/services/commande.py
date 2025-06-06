@@ -1,5 +1,7 @@
+from typing import Optional
 from sqlalchemy.orm import Session
-from app.models import Commande as CommandeModel, LigneCommande as LigneModel
+from sqlalchemy import or_
+from app.models import Commande as CommandeModel, LigneCommande as LigneModel, Article as ArticleModel
 from app.schemas.commande import CommandeCreate, CommandeUpdate
 
 def get_commande(db: Session, commande_id: str):
@@ -8,8 +10,14 @@ def get_commande(db: Session, commande_id: str):
 def get_commande_by_reference(db: Session, reference: str):
     return db.query(CommandeModel).filter(CommandeModel.reference == reference).first()
 
-def list_commandes(db: Session, skip: int = 0, limit: int = 100):
-    return db.query(CommandeModel).offset(skip).limit(limit).all()
+def list_commandes(db: Session, skip: int = 0, limit: int = 100, designation: Optional[str] = None):
+    query = db.query(CommandeModel)
+    if designation:
+        # Jointure avec les articles et filtre sur la désignation
+        query = query.join(CommandeModel.articles).filter(
+            ArticleModel.designation.ilike(f"%{designation}%")
+        ).distinct()
+    return query.offset(skip).limit(limit).all()
 
 def create_commande(db: Session, commande: CommandeCreate):
     db_commande = CommandeModel(
