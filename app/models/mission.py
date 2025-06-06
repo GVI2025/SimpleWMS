@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Enum, ForeignKey, Integer, DateTime, String
+from sqlalchemy import Column, Enum, ForeignKey, Integer, DateTime, String, Boolean
 from sqlalchemy.orm import relationship
 from uuid import uuid4
 import enum
@@ -32,6 +32,7 @@ class Mission(Base):
     agent_id = Column(String, ForeignKey("agents.id"), nullable=True)
     date_creation = Column(DateTime, default=datetime.utcnow)
     date_execution = Column(DateTime, nullable=True)
+    urgent = Column(Boolean, default=False)
 
     article = relationship("Article")
     source = relationship("Emplacement", foreign_keys=[source_id])
