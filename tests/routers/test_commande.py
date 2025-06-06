@@ -83,6 +83,40 @@ class TestCommandeRouter:
         # Verify service function was called
         mock_list_commandes.assert_called_once()
 
+    @patch('app.routers.commande.commande_service.list_commandes')
+    def test_list_commandes_with_designation_filter(self, mock_list_commandes):
+        """Test avec filtre designation"""
+        filtered_commandes = [mock_commande_list[0]]
+        test_designation = "ArticleSpecial"
+        mock_list_commandes.return_value = filtered_commandes
+        
+        response = client.get(f"/commandes/?designation={test_designation}")
+        
+        assert response.status_code == 200
+        assert len(response.json()) == 1
+        mock_list_commandes.assert_called_once_with(ANY, 0, 100, test_designation)
+
+    @patch('app.routers.commande.commande_service.list_commandes')
+    def test_list_commandes_pagination(self, mock_list_commandes):
+        """Test de la pagination (skip/limit)"""
+        mock_list_commandes.return_value = mock_commande_list[:1]
+        
+        response = client.get("/commandes/?skip=1&limit=1")
+        
+        assert response.status_code == 200
+        assert len(response.json()) == 1
+        mock_list_commandes.assert_called_once_with(ANY, 1, 1, None)
+
+    @patch('app.routers.commande.commande_service.list_commandes')
+    def test_list_commandes_with_all_parameters(self, mock_list_commandes):
+        """Test combinant tous les paramètres"""
+        mock_list_commandes.return_value = []
+        
+        response = client.get("/commandes/?skip=5&limit=10&designation=Test")
+        
+        assert response.status_code == 200
+        mock_list_commandes.assert_called_once_with(ANY, 5, 10, "Test")
+
     @patch('app.routers.commande.commande_service.get_commande_by_reference')
     @patch('app.routers.commande.commande_service.create_commande')
     def test_create_commande_success(self, mock_create_commande, mock_get_by_reference):

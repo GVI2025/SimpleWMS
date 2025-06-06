@@ -8,7 +8,9 @@ def get_commande(db: Session, commande_id: str):
 def get_commande_by_reference(db: Session, reference: str):
     return db.query(CommandeModel).filter(CommandeModel.reference == reference).first()
 
-def list_commandes(db: Session, skip: int = 0, limit: int = 100):
+def list_commandes(db: Session, skip: int = 0, limit: int = 100, designation: str = None):
+    if designation:
+        return db.query(CommandeModel).join(CommandeModel.lignes).join(LigneModel.article).filter(LigneModel.article.has(designation=designation)).offset(skip).limit(limit).all()
     return db.query(CommandeModel).offset(skip).limit(limit).all()
 
 def create_commande(db: Session, commande: CommandeCreate):
