@@ -2,7 +2,7 @@ from fastapi.testclient import TestClient
 from app.main import app
 from unittest.mock import patch, ANY
 
-from app.schemas.emplacement import EmplacementCreate, EmplacementUpdate, EmplacementRead
+from app.schemas.emplacement import EmplacementCreate, EmplacementUpdate, EmplacementRead, TypeEmplacement
 from app.models import Emplacement as EmplacementModel
 
 client = TestClient(app)
@@ -10,21 +10,21 @@ client = TestClient(app)
 mock_emplacement_data = {
     "id": "12345",
     "code": "EMPL001",
-    "type": "STOCKAGE",
+    "type": TypeEmplacement.STOCKAGE,
     "capacite_poids_kg": 1000.0,
     "capacite_volume_m3": 10.0
 }
 
 mock_emplacement_create = EmplacementCreate(
     code="EMPL001",
-    type="STOCKAGE",
+    type=TypeEmplacement.STOCKAGE,
     capacite_poids_kg=1000.0,
     capacite_volume_m3=10.0
 )
 
 mock_emplacement_update = EmplacementUpdate(
     code="EMPL001",
-    type="STOCKAGE",
+    type=TypeEmplacement.STOCKAGE,
     capacite_poids_kg=2000.0,
     capacite_volume_m3=20.0
 )
@@ -32,7 +32,7 @@ mock_emplacement_update = EmplacementUpdate(
 mock_emplacement_model = EmplacementModel(
     id="12345",
     code="EMPL001",
-    type="STOCKAGE",
+    type=TypeEmplacement.STOCKAGE,
     capacite_poids_kg=1000.0,
     capacite_volume_m3=10.0
 )
@@ -41,14 +41,14 @@ mock_emplacement_list = [
     EmplacementModel(
         id="12345",
         code="EMPL001",
-        type="STOCKAGE",
+        type=TypeEmplacement.STOCKAGE,
         capacite_poids_kg=1000.0,
         capacite_volume_m3=10.0
     ),
     EmplacementModel(
         id="E67890",
         code="EMPL002",
-        type="VENTE",
+        type=TypeEmplacement.VENTE,
         capacite_poids_kg=500.0,
         capacite_volume_m3=5.0
     )
