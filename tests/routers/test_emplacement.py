@@ -8,7 +8,7 @@ from app.models import Emplacement as EmplacementModel
 client = TestClient(app)
 
 mock_emplacement_data = {
-    "id": "E12345",
+    "id": "12345",
     "code": "EMPL001",
     "libelle": "Emplacement 1",
     "description": "Description of Emplacement 1"
@@ -27,7 +27,7 @@ mock_emplacement_update = EmplacementUpdate(
 )
 
 mock_emplacement_model = EmplacementModel(
-    id="E12345",
+    id="12345",
     code="EMPL001",
     libelle="Emplacement 1",
     description="Description of Emplacement 1"
@@ -35,7 +35,7 @@ mock_emplacement_model = EmplacementModel(
 
 mock_emplacement_list = [
     EmplacementModel(
-        id="E12345",
+        id="12345",
         code="EMPL001",
         libelle="Emplacement 1",
         description="Description of Emplacement 1"
@@ -77,33 +77,33 @@ class TestEmplacementRouter:
     def test_get_emplacement_success(self, mock_get):
         mock_get.return_value = mock_emplacement_model
 
-        response = client.get("/emplacements/E12345")
+        response = client.get("/emplacements/12345")
         assert response.status_code == 200
         assert response.json()["code"] == "EMPL001"
         assert response.json()["libelle"] == "Emplacement 1"
 
-        mock_get.assert_called_once_with(ANY, "E12345")
+        mock_get.assert_called_once_with(ANY, "12345")
 
     @patch('app.routers.emplacement.emplacement_service.update_emplacement')
     def test_update_emplacement_success(self, mock_update):
         mock_update.return_value = mock_emplacement_model
 
-        response = client.put("/emplacements/E12345", json=mock_emplacement_update.dict())
+        response = client.put("/emplacements/12345", json=mock_emplacement_update.dict())
         assert response.status_code == 200
         assert response.json()["code"] == mock_emplacement_update.code
         assert response.json()["libelle"] == mock_emplacement_update.libelle
         assert response.json()["description"] == mock_emplacement_update.description
 
-        mock_update.assert_called_once_with(ANY, "E12345", mock_emplacement_update)
+        mock_update.assert_called_once_with(ANY, "12345", mock_emplacement_update)
 
     @patch('app.routers.emplacement.emplacement_service.delete_emplacement')
     def test_delete_emplacement_success(self, mock_delete):
         mock_delete.return_value = None
 
-        response = client.delete("/emplacements/E12345")
+        response = client.delete("/emplacements/12345")
         assert response.status_code == 204
 
-        mock_delete.assert_called_once_with(ANY, "E12345")
+        mock_delete.assert_called_once_with(ANY, "12345")
 
     @patch('app.routers.emplacement.emplacement_service.get_emplacement')
     def test_get_emplacement_not_found(self, mock_get):
