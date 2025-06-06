@@ -11,6 +11,11 @@ def get_commande_by_reference(db: Session, reference: str):
 def list_commandes(db: Session, skip: int = 0, limit: int = 100):
     return db.query(CommandeModel).offset(skip).limit(limit).all()
 
+def list_commandes_by_article(db: Session, article_designation: str, skip: int = 0, limit: int = 100):
+    return db.query(CommandeModel).join(LigneModel).join(LigneModel.article).filter(
+        LigneModel.article.has(designation=article_designation)
+    ).offset(skip).limit(limit).all()
+
 def create_commande(db: Session, commande: CommandeCreate):
     db_commande = CommandeModel(
         reference=commande.reference,
