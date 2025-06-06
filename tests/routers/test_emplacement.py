@@ -10,41 +10,47 @@ client = TestClient(app)
 mock_emplacement_data = {
     "id": "12345",
     "code": "EMPL001",
-    "libelle": "Emplacement 1",
-    "description": "Description of Emplacement 1"
+    "type": "STOCKAGE",
+    "capacite_poids_kg": 1000.0,
+    "capacite_volume_m3": 10.0
 }
 
 mock_emplacement_create = EmplacementCreate(
     code="EMPL001",
-    libelle="Emplacement 1",
-    description="Description of Emplacement 1"
+    type="STOCKAGE",
+    capacite_poids_kg=1000.0,
+    capacite_volume_m3=10.0
 )
 
 mock_emplacement_update = EmplacementUpdate(
     code="EMPL001",
-    libelle="Updated Emplacement 1",
-    description="Updated description of Emplacement 1"
+    type="STOCKAGE",
+    capacite_poids_kg=2000.0,
+    capacite_volume_m3=20.0
 )
 
 mock_emplacement_model = EmplacementModel(
     id="12345",
     code="EMPL001",
-    libelle="Emplacement 1",
-    description="Description of Emplacement 1"
+    type="STOCKAGE",
+    capacite_poids_kg=1000.0,
+    capacite_volume_m3=10.0
 )
 
 mock_emplacement_list = [
     EmplacementModel(
         id="12345",
         code="EMPL001",
-        libelle="Emplacement 1",
-        description="Description of Emplacement 1"
+        type="STOCKAGE",
+        capacite_poids_kg=1000.0,
+        capacite_volume_m3=10.0
     ),
     EmplacementModel(
         id="E67890",
         code="EMPL002",
-        libelle="Emplacement 2",
-        description="Description of Emplacement 2"
+        type="VENTE",
+        capacite_poids_kg=500.0,
+        capacite_volume_m3=5.0
     )
 ]
 
@@ -65,11 +71,17 @@ class TestEmplacementRouter:
     def test_create_emplacement_success(self, mock_create):
         mock_create.return_value = mock_emplacement_model
 
-        response = client.post("/emplacements/", json=mock_emplacement_create.dict())
+        response = client.post("/emplacements/", json={
+            "code": mock_emplacement_create.code,
+            "type": mock_emplacement_create.type,
+            "capacite_poids_kg": mock_emplacement_create.capacite_poids_kg,
+            "capacite_volume_m3": mock_emplacement_create.capacite_volume_m3
+        })
         assert response.status_code == 200
         assert response.json()["code"] == mock_emplacement_create.code
-        assert response.json()["libelle"] == mock_emplacement_create.libelle
-        assert response.json()["description"] == mock_emplacement_create.description
+        assert response.json()["type"] == mock_emplacement_create.type
+        assert response.json()["capacite_poids_kg"] == mock_emplacement_create.capacite_poids_kg
+        assert response.json()["capacite_volume_m3"] == mock_emplacement_create.capacite_volume_m3
 
         mock_create.assert_called_once()
 
@@ -80,7 +92,7 @@ class TestEmplacementRouter:
         response = client.get("/emplacements/12345")
         assert response.status_code == 200
         assert response.json()["code"] == "EMPL001"
-        assert response.json()["libelle"] == "Emplacement 1"
+        assert response.json()["type"] == "STOCKAGE"
 
         mock_get.assert_called_once_with(ANY, "12345")
 
@@ -91,8 +103,9 @@ class TestEmplacementRouter:
         response = client.put("/emplacements/12345", json=mock_emplacement_update.dict())
         assert response.status_code == 200
         assert response.json()["code"] == mock_emplacement_update.code
-        assert response.json()["libelle"] == mock_emplacement_update.libelle
-        assert response.json()["description"] == mock_emplacement_update.description
+        assert response.json()["type"] == mock_emplacement_update.type
+        assert response.json()["capacite_poids_kg"] == mock_emplacement_update.capacite_poids_kg
+        assert response.json()["capacite_volume_m3"] == mock_emplacement_update.capacite_volume_m3
 
         mock_update.assert_called_once_with(ANY, "12345", mock_emplacement_update)
 
@@ -125,4 +138,3 @@ class TestEmplacementRouter:
 
         mock_create.assert_called_once()
 
-    
