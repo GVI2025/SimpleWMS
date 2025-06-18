@@ -16,7 +16,7 @@ def list_reservations(db: Session = Depends(get_db)):
 def create_reservation(reservation: ReservationCreate, db: Session = Depends(get_db)):
     return reservation_service.create_reservation(db, reservation)
 
-@router.get('/{reservation_salle}', response_model=ReservationRead)
+@router.get('/{reservation_salle}', response_model=List[ReservationRead])
 def get_reservations_by_salle(reservation_salle: str, db: Session = Depends(get_db)):
     reservations = reservation_service.get_reservations_by_salle(db, reservation_salle)
     if not reservations:
