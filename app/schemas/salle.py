@@ -16,3 +16,6 @@ class SalleRead(SalleBase):
 
     class Config:
         orm_mode = True
+
+class SalleDelete(BaseModel):
+    pass
