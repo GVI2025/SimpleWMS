@@ -8,37 +8,35 @@ from app.models import Reservation as ReservationModel
 
 client = TestClient(app)
 
-# Mock reservation data
-current_datetime = datetime.now()
 
 mock_reservation_data = {
     "id": "12345",
     "salle_id": "salle_001",
     "utilisateur": "albert",
-    "date": current_datetime.date(),
-    "heure": current_datetime.time(),
+    "date": "2023-10-01",
+    "heure": "10:00:00",
 }
 
 mock_reservation_create = ReservationCreate(
     salle_id="salle_001",
     utilisateur="albert",
-    date=current_datetime.date(),
-    heure=current_datetime.time(),
+    date="2023-10-01",
+    heure="10:00:00",
 )
 
 mock_reservation_update = ReservationUpdate(
     salle_id="salle_001",
     utilisateur="albert_updated",
-    date=current_datetime.date(),
-    heure=current_datetime.time(),
+    date="2023-10-01",
+    heure="10:00:00",
 )
 
 mock_reservation_model = ReservationModel(
     id="12345",
     salle_id="salle_001",
     utilisateur="albert",
-    date=current_datetime.date(),
-    heure=current_datetime.time(),
+    date="2023-10-01",
+    heure="10:00:00",
 )
 
 mock_reservation_list = [
@@ -46,15 +44,15 @@ mock_reservation_list = [
         id="12345",
         salle_id="salle_001",
         utilisateur="albert",
-        date=current_datetime.date(),
-        heure=current_datetime.time(),
+        date="2023-10-01",
+        heure="10:00:00",
     ),
     ReservationModel(
         id="67890",
         salle_id="salle_002",
         utilisateur="bob",
-        date=current_datetime.date(),
-        heure=current_datetime.time(),
+        date="2023-10-01",
+        heure="10:00:00",
     ),
 ]
 
