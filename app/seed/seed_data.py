@@ -3,7 +3,7 @@ from app.database.database import SessionLocal
 from app.models.reservation import Reservation
 from app.models.salle import Salle
 
-from datetime import datetime, date
+from datetime import date, time
 from sqlalchemy.exc import IntegrityError
 
 def seed():
@@ -16,17 +16,17 @@ def seed():
 
         # === SALLES ===
         salles = [
-            Salle(id="salle1", nom="Salle A", capacite=10, description="Salle de réunion A"),
-            Salle(id="salle2", nom="Salle B", capacite=20, description="Salle de réunion B"),
-            Salle(id="salle3", nom="Salle C", capacite=30, description="Salle de réunion C"),
-            Salle(id="salle4", nom="Salle D", capacite=15, description="Salle de réunion D"),
+            Salle(id="salle1", nom="Salle A", capacité=10, localisation="1er étage"),
+            Salle(id="salle2", nom="Salle B", capacité=20, localisation="2ème étage"),
+            Salle(id="salle3", nom="Salle C", capacité=30, localisation="3ème étage"),
+            Salle(id="salle4", nom="Salle D", capacité=15,  localisation="1er étage"),
         ]
 
         # === RESERVATIONS ===
         reservations = [
-            Reservation(id="reservation1", salle_id="salle1", date=date(2023, 10, 1), heure_debut=datetime(2023, 10, 1, 9, 0), heure_fin=datetime(2023, 10, 1, 10, 0), description="Réunion de projet"),
-            Reservation(id="reservation2", salle_id="salle2", date=date(2023, 10, 2), heure_debut=datetime(2023, 10, 2, 11, 0), heure_fin=datetime(2023, 10, 2, 12, 0), description="Formation interne"),
-            Reservation(id="reservation3", salle_id="salle3", date=date(2023, 10, 3), heure_debut=datetime(2023, 10, 3, 14, 0), heure_fin=datetime(2023, 10, 3, 15, 0), description="Réunion d'équipe")
+            Reservation(id="reservation1", salle_id="salle1", date=date(2023, 10, 1), heure=time(12, 12), utilisateur="utilisateur1"),
+            Reservation(id="reservation2", salle_id="salle2", date=date(2023, 10, 2), heure=time(22, 30), utilisateur="utilisateur2"),
+            Reservation(id="reservation3", salle_id="salle2", date=date(2023, 10, 3), heure=time(14, 0), utilisateur="utilisateur1"),
         ]
 
         # Ajout global

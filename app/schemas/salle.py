@@ -2,7 +2,7 @@ from pydantic import BaseModel
 
 class SalleBase(BaseModel):
     nom: str
-    capacite: int
+    capacité: int
     localisation: str
 
 class SalleCreate(SalleBase):
@@ -16,3 +16,6 @@ class SalleRead(SalleBase):
 
     class Config:
         orm_mode = True
+
+class SalleDelete(BaseModel):
+    pass
