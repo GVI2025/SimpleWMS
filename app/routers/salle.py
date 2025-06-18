@@ -6,7 +6,7 @@ from app.schemas.salle import SalleRead, SalleCreate, SalleUpdate, SalleDelete
 from app.services import salle as salle_service
 from app.database.database import get_db
 
-router = APIRouter(prefix="/salle", tags=["salle"])
+router = APIRouter(prefix="/salles", tags=["salles"])
 
 @router.get("/", response_model=List[SalleRead])
 def list_salle(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
