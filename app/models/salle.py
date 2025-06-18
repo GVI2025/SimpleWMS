@@ -3,7 +3,7 @@ from uuid import uuid4
 
 from app.database.database import Base
 
-class Article(Base):
+class Salle(Base):
     __tablename__ = "salle"
 
     id = Column(String, primary_key=True, default=lambda: str(uuid4()))
