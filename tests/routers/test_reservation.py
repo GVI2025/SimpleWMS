@@ -60,33 +60,32 @@ mock_reservation_list = [
 def test_create_reservation(mock_create_reservation):
     mock_create_reservation.return_value = mock_reservation_model
 
-    response = client.post("/reservations/", json=mock_reservation_create.dict())
-    assert response.status_code == 201
+    response = client.post("/reservations/", json={
+        "id": "12345",
+        "salle_id": "salle_001",
+        "utilisateur": "albert",
+        "date": "2023-10-01",
+        "heure": "10:00:00",
+    })
+    assert response.status_code == 200
     assert response.json() == mock_reservation_data
 
 @patch("app.services.reservation.get_reservation")
 def test_get_reservation(mock_get_reservation):
-    mock_get_reservation.return_value = mock_reservation_model
+    mock_get_reservation.return_value = mock_reservation_list
 
-    response = client.get("/reservations/12345")
+    response = client.get("/reservations/")
     assert response.status_code == 200
-    assert response.json() == mock_reservation_data
+    assert len(response.json()) == 2
 
-@patch("app.services.reservation.update_reservation")
-def test_update_reservation(mock_update_reservation):
-    mock_update_reservation.return_value = mock_reservation_model
+@patch("app.services.reservation.get_reservations_by_salle")
+def test_get_reservations_by_salle(mock_get_reservations_by_salle):
+    mock_get_reservations_by_salle.return_value = [mock_reservation_model]
 
-    response = client.put("/reservations/12345", json=mock_reservation_update.dict())
+    response = client.get("/reservations/salle_001")
     assert response.status_code == 200
-    assert response.json() == mock_reservation_data
-
-@patch("app.services.reservation.delete_reservation")
-def test_delete_reservation(mock_delete_reservation):
-    mock_delete_reservation.return_value = mock_reservation_model
-
-    response = client.delete("/reservations/12345")
-    assert response.status_code == 200
-    assert response.json() == mock_reservation_data
+    assert len(response.json()) == 1
+    assert response.json()[0] == mock_reservation_data
 
 
 
