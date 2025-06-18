@@ -21,6 +21,13 @@ mock_salle_create = SalleCreate(
     localisation="Test Localisation",
 )
 
+mock_salle_client = SalleModel(
+    id="test_id",
+    nom="Test Salle",
+    capacité=100,
+    localisation="Test Localisation"
+)
+
 mock_salle_update = SalleUpdate(
     nom="Updated Salle",
     capacité=150,
@@ -56,19 +63,29 @@ class TestSalleRouter:
         assert response.status_code == 200
         assert response.json() == mock_salle_data
 
-    # @patch("app.services.salle.update_salle")
-    # def test_update_salle(self, mock_update_salle):
-    #     updated_salle = mock_salle_data.copy()
-    #     print("Updated Salle:", updated_salle)
-    #     updated_salle["nom"] = "Updated Salle"
-    #     # updated_salle["capacité"] = 150
-    #     # updated_salle["localisation"] = "Updated Localisation"
-    #     mock_update_salle.return_value = mock_salle_data
+    @patch("app.services.salle.update_salle")
+    def test_update_salle(self, mock_update_salle):
+        updated_salle = mock_salle_client
+        updated_salle.nom = mock_salle_update.nom
+        updated_salle.capacité = mock_salle_update.capacité
+        updated_salle.localisation = mock_salle_update.localisation
+        
+        mock_update_salle.return_value = updated_salle
 
-    #     # Test the update endpoint
-    #     response = client.put("/salles/test_id", json=mock_salle_update.model_dump())
+        # Test the update endpoint
+        response = client.put(
+            "/salles/test_id", 
+            json={
+                "nom": "updated salle",
+                "capacité": 150,
+                "localisation": "updated localisation"
+            }
+        )
 
-    #     assert response.status_code == 200
+        assert response.status_code == 200
+        assert response.json()["nom"] == mock_salle_update.nom
+        assert response.json()["capacité"] == mock_salle_update.capacité
+        assert response.json()["localisation"] == mock_salle_update.localisation
 
     @patch("app.services.salle.delete_salle")
     def test_delete_salle(self, mock_delete_salle):
