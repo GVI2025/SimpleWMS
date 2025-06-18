@@ -9,8 +9,8 @@ def create_reservation(db: Session, reservation: ReservationModel):
     db.refresh(db_reservation)
     return db_reservation
 
-def get_reservation(db: Session, reservation_id: str):
-    return db.query(ReservationModel).filter(ReservationModel.id == reservation_id).first()
+def get_reservation(db: Session):
+    return db.query(ReservationModel).all()
 
 def get_reservations_by_salle(db: Session, salle_id: str):
     return db.query(ReservationModel).filter(ReservationModel.salle_id == salle_id).all()
