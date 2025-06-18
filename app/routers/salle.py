@@ -32,7 +32,7 @@ def create_salle(salle: SalleCreate, db: Session = Depends(get_db)):
 
 @router.put("/{salle_id}", response_model=SalleUpdate)
 def update_salle(agent_id: str, agent: SalleUpdate, db: Session = Depends(get_db)):
-    updated = salle_service.update_agent(db, agent_id, agent)
+    updated = salle_service.update_salle(db, agent_id, agent)
     if not updated:
         raise HTTPException(status_code=404, detail="Salle not found")
     return updated
