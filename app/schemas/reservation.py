@@ -2,7 +2,6 @@ from pydantic import BaseModel
 from datetime import date,time
 
 class ReservationBase(BaseModel):
-    id: str
     salle_id: str
     date: date
     heure: time
