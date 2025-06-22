@@ -2,14 +2,10 @@ from sqlalchemy.orm import Session
 from app.models import Salle as SalleModel
 from app.schemas.salle import SalleCreate, SalleUpdate
 
-def get_salle(db: Session, salle_id: str, disponible: bool = None):
-    if disponible is not None:
-        return db.query(SalleModel).filter(SalleModel.id == salle_id, SalleModel.disponible == disponible).first()
+def get_salle(db: Session, salle_id: str):
     return db.query(SalleModel).filter(SalleModel.id == salle_id).first()
 
-def get_salle_by_name(db: Session, name: str, disponible: bool = None):
-    if disponible is not None:
-        return db.query(SalleModel).filter(SalleModel.nom == name, SalleModel.disponible == disponible).first()
+def get_salle_by_name(db: Session, name: str):
     return db.query(SalleModel).filter(SalleModel.nom == name).first()
 
 def list_salles(db: Session, skip: int = 0, limit: int = 100, disponible: bool = None):
