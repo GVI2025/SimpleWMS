@@ -17,4 +17,3 @@
 - filtering by room availability in the list of rooms.
 - Added deletion of reservations.
 - Added `commentaire` field to reservations.
-

@@ -9,8 +9,8 @@ from app.database.database import get_db
 router = APIRouter(prefix="/salles", tags=["salles"])
 
 @router.get("/", response_model=List[SalleRead])
-def list_salle(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
-    return salle_service.list_salles(db, skip, limit)
+def list_salle(skip: int = 0, limit: int = 100, disponible: bool = None, db: Session = Depends(get_db)):
+    return salle_service.list_salles(db, skip, limit, disponible)
 
 @router.get("/{salle_id}", response_model=SalleRead)
 def get_salle(salle_id: str, db: Session = Depends(get_db)):
