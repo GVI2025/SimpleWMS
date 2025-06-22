@@ -8,7 +8,9 @@ def get_salle(db: Session, salle_id: str):
 def get_salle_by_name(db: Session, name: str):
     return db.query(SalleModel).filter(SalleModel.nom == name).first()
 
-def list_salles(db: Session, skip: int = 0, limit: int = 100):
+def list_salles(db: Session, skip: int = 0, limit: int = 100, disponible: bool = None):
+    if disponible is not None:
+        return db.query(SalleModel).filter(SalleModel.disponible == disponible).offset(skip).limit(limit).all()
     return db.query(SalleModel).offset(skip).limit(limit).all()
 
 def create_salle(db: Session, salle: SalleCreate):
