@@ -15,6 +15,7 @@ mock_reservation_data = {
     "utilisateur": "albert",
     "date": "2023-10-01",
     "heure": "10:00:00",
+    "commentaire": "Ceci est un commentaire",
 }
 
 mock_reservation_create = ReservationCreate(
@@ -22,6 +23,7 @@ mock_reservation_create = ReservationCreate(
     utilisateur="albert",
     date="2023-10-01",
     heure="10:00:00",
+    commentaire="Ceci est un commentaire",
 )
 
 mock_reservation_update = ReservationUpdate(
@@ -29,6 +31,7 @@ mock_reservation_update = ReservationUpdate(
     utilisateur="albert_updated",
     date="2023-10-01",
     heure="10:00:00",
+    commentaire="Ceci est un commentaire mis à jour",
 )
 
 mock_reservation_model = ReservationModel(
@@ -37,6 +40,7 @@ mock_reservation_model = ReservationModel(
     utilisateur="albert",
     date="2023-10-01",
     heure="10:00:00",
+    commentaire="Ceci est un commentaire",
 )
 
 mock_reservation_list = [
@@ -46,6 +50,7 @@ mock_reservation_list = [
         utilisateur="albert",
         date="2023-10-01",
         heure="10:00:00",
+        commentaire="Ceci est un commentaire",
     ),
     ReservationModel(
         id="67890",
@@ -53,6 +58,7 @@ mock_reservation_list = [
         utilisateur="bob",
         date="2023-10-01",
         heure="10:00:00",
+        commentaire="Ceci est un autre commentaire",
     ),
 ]
 
@@ -66,6 +72,7 @@ def test_create_reservation(mock_create_reservation):
         "utilisateur": "albert",
         "date": "2023-10-01",
         "heure": "10:00:00",
+        "commentaire": "Ceci est un commentaire",
     })
     assert response.status_code == 200
     assert response.json() == mock_reservation_data
