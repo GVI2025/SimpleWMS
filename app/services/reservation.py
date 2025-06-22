@@ -23,3 +23,15 @@ def get_reservation_by_time(db: Session, time: time):
 
 def get_reservations_by_user(db: Session, utilisateur: str):
     return db.query(ReservationModel).filter(ReservationModel.utilisateur == utilisateur).all()
+
+def get_reservation_by_id(db: Session, reservation_id: int):
+    return db.query(ReservationModel).filter(ReservationModel.id == reservation_id).first()
+
+def delete_reservation(db: Session, reservation_id: int):
+    reservation = get_reservation_by_id(db, reservation_id)
+    if reservation:
+        db.delete(reservation)
+        db.commit()
+        return reservation
+    return None
+
