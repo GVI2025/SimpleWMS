@@ -16,17 +16,17 @@ def seed():
 
         # === SALLES ===
         salles = [
-            Salle(id="salle1", nom="Salle A", capacité=10, localisation="1er étage"),
-            Salle(id="salle2", nom="Salle B", capacité=20, localisation="2ème étage"),
-            Salle(id="salle3", nom="Salle C", capacité=30, localisation="3ème étage"),
-            Salle(id="salle4", nom="Salle D", capacité=15,  localisation="1er étage"),
+            Salle(id="salle1", nom="Salle A", capacité=10, localisation="1er étage", disponible=True),
+            Salle(id="salle2", nom="Salle B", capacité=20, localisation="2ème étage", disponible=True),
+            Salle(id="salle3", nom="Salle C", capacité=30, localisation="3ème étage", disponible=True),
+            Salle(id="salle4", nom="Salle D", capacité=15,  localisation="1er étage", disponible=True),
         ]
 
         # === RESERVATIONS ===
         reservations = [
-            Reservation(id="reservation1", salle_id="salle1", date=date(2023, 10, 1), heure=time(12, 12), utilisateur="utilisateur1"),
-            Reservation(id="reservation2", salle_id="salle2", date=date(2023, 10, 2), heure=time(22, 30), utilisateur="utilisateur2"),
-            Reservation(id="reservation3", salle_id="salle2", date=date(2023, 10, 3), heure=time(14, 0), utilisateur="utilisateur1"),
+            Reservation(id="reservation1", salle_id="salle1", date=date(2023, 10, 1), heure=time(12, 12), utilisateur="utilisateur1", commentaire="Ceci est un commentaire"),
+            Reservation(id="reservation2", salle_id="salle2", date=date(2023, 10, 2), heure=time(22, 30), utilisateur="utilisateur2", commentaire="Ceci est un commentaire"),
+            Reservation(id="reservation3", salle_id="salle2", date=date(2023, 10, 3), heure=time(14, 0), utilisateur="utilisateur1", commentaire=""),
         ]
 
         # Ajout global

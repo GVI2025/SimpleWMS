@@ -6,6 +6,7 @@ class ReservationBase(BaseModel):
     date: date
     heure: time
     utilisateur: str
+    commentaire: str 
 
 class ReservationCreate(ReservationBase):
     pass

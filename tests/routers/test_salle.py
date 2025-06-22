@@ -13,25 +13,29 @@ mock_salle_data = {
     "nom": "Test Salle",
     "capacité": 100,
     "localisation": "Test Localisation",
+    "disponible": True,
 }
 
 mock_salle_create = SalleCreate(
     nom="Test Salle",
     capacité=100,
     localisation="Test Localisation",
+    disponible=True,
 )
 
 mock_salle_client = SalleModel(
     id="test_id",
     nom="Test Salle",
     capacité=100,
-    localisation="Test Localisation"
+    localisation="Test Localisation",
+    disponible=True,
 )
 
 mock_salle_update = SalleUpdate(
     nom="Updated Salle",
     capacité=150,
     localisation="Updated Localisation",
+    disponible=False,
 )
 
 class TestSalleRouter:
@@ -69,6 +73,7 @@ class TestSalleRouter:
         updated_salle.nom = mock_salle_update.nom
         updated_salle.capacité = mock_salle_update.capacité
         updated_salle.localisation = mock_salle_update.localisation
+        updated_salle.disponible = mock_salle_update.disponible
         
         mock_update_salle.return_value = updated_salle
 
@@ -78,7 +83,8 @@ class TestSalleRouter:
             json={
                 "nom": "updated salle",
                 "capacité": 150,
-                "localisation": "updated localisation"
+                "localisation": "updated localisation",
+                "disponible": False
             }
         )
 
