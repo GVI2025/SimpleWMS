@@ -1,16 +1,9 @@
 from apscheduler.schedulers.background import BackgroundScheduler
 from app.services.availability import update_room_availability
+import asyncio
 
-def start_scheduler():
+async def start_scheduler():
     scheduler = BackgroundScheduler()
-    scheduler.add_job(update_room_availability, 'interval', minutes=1)
+    scheduler.add_job(update_room_availability, 'interval', minutes=5)  # Adjust the interval as needed
     scheduler.start()
-    print("Scheduler started. Press Ctrl+C to stop.")
 
-    try:
-        # Garde le processus vivant
-        import time
-        while True:
-            time.sleep(10)
-    except (KeyboardInterrupt, SystemExit):
-        scheduler.shutdown()

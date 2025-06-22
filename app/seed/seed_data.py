@@ -27,6 +27,7 @@ def seed():
             Reservation(id="reservation1", salle_id="salle1", date=date(2023, 10, 1), heure=time(12, 12), utilisateur="utilisateur1"),
             Reservation(id="reservation2", salle_id="salle2", date=date(2023, 10, 2), heure=time(22, 30), utilisateur="utilisateur2"),
             Reservation(id="reservation3", salle_id="salle2", date=date(2023, 10, 3), heure=time(14, 0), utilisateur="utilisateur1"),
+            Reservation(id="reservation4", salle_id="salle3", date=date(2025, 6, 22), heure=time(15, 31), utilisateur="utilisateur3"),
         ]
 
         # Ajout global

@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 import asyncio
-from app.services.scheduler import run_background_task
+from app.services.scheduler import start_scheduler
 from app.routers import reservation, salle
 
 app = FastAPI(
@@ -16,6 +16,8 @@ app.include_router(salle.router)
 async def root():
     return {"message": "Welcome to SimpleWMS!"}
 
+@app.on_event("startup")
 async def startup_event():
-    print("Starting up the application...")
-    asyncio.create_task(run_background_task())
+    # Start the background scheduler
+    await asyncio.create_task(start_scheduler())
+    print("Scheduler started.")
