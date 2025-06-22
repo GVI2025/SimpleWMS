@@ -4,6 +4,7 @@ class SalleBase(BaseModel):
     nom: str
     capacité: int
     localisation: str
+    disponible: bool
 
 class SalleCreate(SalleBase):
     pass

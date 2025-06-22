@@ -16,10 +16,10 @@ def seed():
 
         # === SALLES ===
         salles = [
-            Salle(id="salle1", nom="Salle A", capacité=10, localisation="1er étage"),
-            Salle(id="salle2", nom="Salle B", capacité=20, localisation="2ème étage"),
-            Salle(id="salle3", nom="Salle C", capacité=30, localisation="3ème étage"),
-            Salle(id="salle4", nom="Salle D", capacité=15,  localisation="1er étage"),
+            Salle(id="salle1", nom="Salle A", capacité=10, localisation="1er étage", disponible=True),
+            Salle(id="salle2", nom="Salle B", capacité=20, localisation="2ème étage", disponible=True),
+            Salle(id="salle3", nom="Salle C", capacité=30, localisation="3ème étage", disponible=True),
+            Salle(id="salle4", nom="Salle D", capacité=15,  localisation="1er étage", disponible=True),
         ]
 
         # === RESERVATIONS ===
