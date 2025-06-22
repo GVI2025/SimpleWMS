@@ -43,3 +43,10 @@ def get_reservations_by_user(utilisateur: str, db: Session = Depends(get_db)):
     if not reservations:
         raise HTTPException(status_code=404, detail="No reservations found for this user")
     return reservations
+
+@router.delete('/{reservation_id}', response_model=ReservationRead)
+def delete_reservation(reservation_id: int, db: Session = Depends(get_db)):
+    reservation = reservation_service.get_reservation_by_id(db, reservation_id)
+    if not reservation:
+        raise HTTPException(status_code=404, detail="Reservation not found")
+    return reservation_service.delete_reservation(db, reservation_id)
