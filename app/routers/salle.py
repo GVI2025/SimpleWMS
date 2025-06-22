@@ -9,19 +9,19 @@ from app.database.database import get_db
 router = APIRouter(prefix="/salles", tags=["salles"])
 
 @router.get("/", response_model=List[SalleRead])
-def list_salle(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
-    return salle_service.list_salles(db, skip, limit)
+def list_salle(skip: int = 0, limit: int = 100, disponible: bool = None, db: Session = Depends(get_db)):
+    return salle_service.list_salles(db, skip, limit, disponible)
 
 @router.get("/{salle_id}", response_model=SalleRead)
-def get_salle(salle_id: str, db: Session = Depends(get_db)):
-    salle = salle_service.get_salle(db, salle_id)
+def get_salle(salle_id: str, disponible: bool = None, db: Session = Depends(get_db)):
+    salle = salle_service.get_salle(db, salle_id, disponible)
     if not salle:
         raise HTTPException(status_code=404, detail="Salle not found")
     return salle
 
 @router.get("/name/{name}", response_model=SalleRead)
-def get_salle_by_name(name: str, db: Session = Depends(get_db)):
-    salle = salle_service.get_salle_by_name(db, name)
+def get_salle_by_name(name: str, disponible: bool = None, db: Session = Depends(get_db)):
+    salle = salle_service.get_salle_by_name(db, name, disponible)
     if not salle:
         raise HTTPException(status_code=404, detail="Salle not found")
     return salle
