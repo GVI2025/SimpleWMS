@@ -17,5 +17,5 @@ class ReservationUpdate(ReservationBase):
 class ReservationRead(ReservationBase):
     id: str
 
-    class Config:
-        orm_mode = True
+    class ConfigDict:
+        from_attributes = True
