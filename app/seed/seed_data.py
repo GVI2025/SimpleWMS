@@ -24,9 +24,9 @@ def seed():
 
         # === RESERVATIONS ===
         reservations = [
-            Reservation(id="reservation1", salle_id="salle1", date=date(2023, 10, 1), heure=time(12, 12), utilisateur="utilisateur1"),
-            Reservation(id="reservation2", salle_id="salle2", date=date(2023, 10, 2), heure=time(22, 30), utilisateur="utilisateur2"),
-            Reservation(id="reservation3", salle_id="salle2", date=date(2023, 10, 3), heure=time(14, 0), utilisateur="utilisateur1"),
+            Reservation(id="reservation1", salle_id="salle1", date=date(2023, 10, 1), heure=time(12, 12), utilisateur="utilisateur1", commentaire="Ceci est un commentaire"),
+            Reservation(id="reservation2", salle_id="salle2", date=date(2023, 10, 2), heure=time(22, 30), utilisateur="utilisateur2", commentaire="Ceci est un commentaire"),
+            Reservation(id="reservation3", salle_id="salle2", date=date(2023, 10, 3), heure=time(14, 0), utilisateur="utilisateur1", commentaire=""),
         ]
 
         # Ajout global
