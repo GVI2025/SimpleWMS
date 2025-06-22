@@ -72,6 +72,7 @@ def test_create_reservation(mock_create_reservation):
         "utilisateur": "albert",
         "date": "2023-10-01",
         "heure": "10:00:00",
+        "commentaire": "Ceci est un commentaire",
     })
     assert response.status_code == 200
     assert response.json() == mock_reservation_data
