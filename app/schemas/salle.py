@@ -15,8 +15,8 @@ class SalleUpdate(SalleBase):
 class SalleRead(SalleBase):
     id: str
 
-    class Config:
-        orm_mode = True
+    class ConfigDict:
+        from_attributes = True
 
 class SalleDelete(BaseModel):
     pass
