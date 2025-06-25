@@ -4,8 +4,8 @@ from app.services.scheduler import start_scheduler
 from app.routers import reservation, salle
 
 app = FastAPI(
-    title="A simple WMS",
-    description="A simple WMS REST API built with FastAPI, SQLAlchemy, and SQLite",
+    title="G4 Integration tests",
+    description="A simple Room Management WebAPI REST application",
     version="0.1.0",
 )
 

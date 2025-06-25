@@ -17,3 +17,10 @@
 - filtering by room availability in the list of rooms.
 - Added deletion of reservations.
 - Added `commentaire` field to reservations.
+
+# [1.2.0] (2025-06-25)
+
+### Added
+
+- Integration tests implementation
+- Added github actions workflow for running tests on push and pull requests.
