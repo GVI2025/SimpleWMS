@@ -1,8 +1,8 @@
 [tool.poetry]
-name = "simplewms"
-version = "1.0.0"
-description = "A simple WMS WebAPI REST software"
-authors = ["Your Name <your.email@example.com>"]
+name = "g4-integration-test"
+version = "1.2.0"
+description = "A simple Room Management WebAPI REST application"
+authors = ["Group 4"]
 readme = "README.md"
 packages = [
     { include = "app" }
@@ -17,6 +17,8 @@ alembic = ">=1.16.1,<2.0.0"
 pytest = ">=8.3.5,<9.0.0"
 httpx = ">=0.28.1,<0.29.0"
 pydantic = {extras = ["email"], version = "^2.11.5"}
+apscheduler = "^3.11.0"
+exceptiongroup = ">=1"
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
