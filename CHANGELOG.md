@@ -24,3 +24,4 @@
 
 - Integration tests implementation
 - Added github actions workflow for running tests on push and pull requests.
+- Fixing warnings displayed in the console during tests.
