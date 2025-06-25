@@ -12,8 +12,8 @@ async def startup_event(app: FastAPI):
     yield
 
 app = FastAPI(
-    title="A simple WMS",
-    description="A simple WMS REST API built with FastAPI, SQLAlchemy, and SQLite",
+    title="G4 Integration tests",
+    description="A simple Room Management WebAPI REST application",
     version="0.1.0",
     lifespan=startup_event
 )
